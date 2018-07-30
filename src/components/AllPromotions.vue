@@ -1,11 +1,11 @@
 <template>
-<div>
-<div v-for="promotion in promotions" :key="promotion.nid">
-    <router-link :to="{ name: 'SinglePromotion', params: { PromotionID: promotion.nid }}">
-        <h1 v-html="promotion.title"></h1>
-    </router-link>
-    <p v-html="promotion.field_promotion_category"></p>
-</div>
+<div class="prmotions">
+    <div v-for="promotion in promotions" :key="promotion.nid">
+        <router-link :to="{ name: 'SinglePromotion', params: { PromotionID: promotion.nid }}">
+            <h1 v-html="promotion.title"></h1>
+        </router-link>
+        <p v-html="promotion.field_promotion_category"></p>
+    </div>
 </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
             .then((resp) => this.promotions = resp.data)
         }
     },
-    mounted() {
+    created() {
         this.getAllPromotions()
     }
 }

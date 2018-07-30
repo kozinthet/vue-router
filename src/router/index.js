@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
-import AllCategories from '@/components/AllCategories'
 import CategoryPromotions from '@/components/CategoryPromotions'
 import AllPromotions from '@/components/AllPromotions'
 import SinglePromotion from '@/components/SinglePromotion'

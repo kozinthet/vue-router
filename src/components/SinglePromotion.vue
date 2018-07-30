@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="promotion">
     <div v-for="promotion in promotions" :key="promotion.nid" class="promotions">
         <h3>Promotion Title</h3> 
         <div v-html="promotion.title"></div>
@@ -33,7 +33,7 @@ export default {
             .then((resp) => this.promotions = resp.data)
         }
     },
-    mounted() {
+    created() {
         this.getPromotion()
     }
 }

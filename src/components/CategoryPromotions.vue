@@ -1,16 +1,16 @@
 <template>
-<div>
-    <div v-for="promotion in promotions" :key="promotion.nid">
-        <h3>Promotion Title</h3> 
-        <div v-html="promotion.title"></div>
-        <h3>Promotion Description</h3> 
-        <div v-html="promotion.body"></div>
-        <h3>Promotion Date</h3> 
-        <div v-html="promotion.field_promotion_date"></div>
-        <h3>Promotion Category</h3> 
-        <div v-html="promotion.field_promotion_category"></div>
-        <h3>Promotion From</h3> 
-        <div v-html="promotion.field_information_from"></div>
+<div class="promotions">
+    <section v-if="errored">
+        <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
+    </section>
+    <div v-for="promotion in promotions" :key="promotion.nid" v-if="promotions[0]">
+        <router-link :to="{ name: 'SinglePromotion', params: { PromotionID: promotion.nid }}">
+            <h1 v-html="promotion.title"></h1>
+        </router-link>
+        <p v-html="promotion.field_promotion_category"></p>
+    </div>
+    <div v-show="isLoading">
+        <p>Loading</p>
     </div>
 </div>
 </template>
@@ -21,16 +21,23 @@ export default {
     name: 'CategoryPromotions',
     data() {
         return {
-            promotions: '',
-            params: ''
+            promotions: null,
+            isLoading: true,
+            errored: false
         }
     },
     methods: {
         getPromotions() {
-            // console.log('as')
             Axios
             .get('http://localhost/askpromo-api/api/categories/'  + this.$route.params.CategoryID)
-            .then((resp) => this.promotions = resp.data)
+            .then(response => {
+                this.promotions = response.data
+            })
+            .catch(error => {
+                console.log(error)
+                this.errored = true
+            })
+            .finally(() => this.isLoading = false)
         }
     },
     created() {
